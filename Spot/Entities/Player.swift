@@ -15,9 +15,14 @@ class Player: GKEntity {
     var pHeight = 50;
     var pWidth = 50;
     
-    init() {
+    init((imageName:String)) {
         super.init()
-        
+
+        super.init()
+      //add the Players image
+        let spriteComponent = SpriteComponent(texture: SKTexture(imageNamed: imageName))
+        addComponent(spriteComponent)
+    
 //        let texture = SKTexture(imageNamed: "Spaceship")
         //super.init(texture: texture, color: SKColor.clear, size: CGSize(width:pWidth,height:pHeight))
         //self.physicsBody = SKPhysicsBody(texture: texture, size: CGSize(width:pWidth,height:pHeight))
