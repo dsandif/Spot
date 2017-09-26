@@ -19,7 +19,7 @@ class DamageComponent: GKComponent {
     
     func damaging(target:GKEntity){
         let targetHealth = target.componentForClass(HealthComponent);
-        targetHealth.updateHealth(-self.power);
+        targetHealth.UpdateHealth(-self.power);
     }
     
     required init?(coder aDecoder: NSCoder) {
