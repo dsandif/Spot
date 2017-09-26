@@ -28,6 +28,7 @@ class MovementComponent: GKComponent {
     var speed:Speed?
     var direction: Direction?
     var currentPosition:Tile
+    var canMove:bool
     
     init(position:Tile){
         self.currentPosition = position
