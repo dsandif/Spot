@@ -22,6 +22,12 @@ class ScoreComponent: GKComponent {
         self.points += amount
     }
     
+    func CollectPrize(prize:Prize){
+        //if the prize is health then get the current health component and add the prize amount to the players health
+        
+        //if the prize is points then get the current score component and add it to the players point total by calling self.UpdatePoints
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
