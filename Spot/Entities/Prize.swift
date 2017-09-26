@@ -20,10 +20,14 @@ class Prize: GKEntity {
     var prizeType:PrizeType? = nil;
     var value: Int = 0;
     
-    init(value:Int,prizeType:PrizeType) {
+    init(value:Int,prizeType:PrizeType,imageName:String) {
         super.init()
         self.prizeType = prizeType
         self.value = value;
+        
+        //add the prizes SpriteComponent
+        let spriteComponent = SpriteComponent(texture: SKTexture(imageNamed: imageName))
+        addComponent(spriteComponent)
     }
     
     required init?(coder aDecoder: NSCoder) {
