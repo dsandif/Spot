@@ -24,6 +24,11 @@ class SceneLevel_1:SKScene{
         borderBody.friction = 0
         
         self.physicsBody = borderBody
+        //add a players components
+        //add a tiles components
+        //do a countdown
+        //begin game
+        
         self.addChild(player);
         
         for item in playingArea.board {
