@@ -17,8 +17,6 @@ class Player: GKEntity {
     
     init((imageName:String)) {
         super.init()
-
-        super.init()
       //add the Players image
         let spriteComponent = SpriteComponent(texture: SKTexture(imageNamed: imageName))
         addComponent(spriteComponent)
