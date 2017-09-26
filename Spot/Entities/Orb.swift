@@ -11,9 +11,11 @@ import GameplayKit
 
 class Orb: GKEntity {
  
-    init() {
+    init(imageName:String) {
         super.init()
-        
+      //add the orbs image
+        let spriteComponent = SpriteComponent(texture: SKTexture(imageNamed: imageName))
+        addComponent(spriteComponent)
     }
     
     required init?(coder aDecoder: NSCoder) {
