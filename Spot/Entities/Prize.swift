@@ -18,28 +18,15 @@ enum PrizeType {
 
 class Prize: GKEntity {
     var prizeType:PrizeType? = nil;
-    var extraLives: Int = 0;
-    var extraPoints:Int = 0;
+    var value: Int = 0;
     
-    init(amount:Int,prizeType:PrizeType) {
+    init(value:Int,prizeType:PrizeType) {
         super.init()
-        AddPrize(amount: amount, prizeType: prizeType)
+        self.prizeType = prizeType
+        self.value = value;
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    public func AddPrize(amount:Int, prizeType:PrizeType){
-    
-        switch prizeType {
-            case .ExtraLives:
-                self.extraLives += amount
-                break;
-            case .Points:
-                self.extraPoints += amount
-                break;
-        }
-    }
-    
 }
