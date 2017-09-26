@@ -27,13 +27,10 @@ class GameBoard {
             var moveSpace = Tile()
             board.append(moveSpace)
             
-            if idx == 1 {
-                xVal = 0
-                yVal = 0
-            }else{
-                
-            }
-            
+
+            var xVal = 0
+            var yVal = 0
+
             moveSpace.node.position = CGPoint(x:xVal,y:yVal)
         }
     }

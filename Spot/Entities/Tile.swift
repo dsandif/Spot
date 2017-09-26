@@ -8,13 +8,17 @@
 
 import Foundation
 import SpriteKit
+import GameplayKit
 
-class Tile {
-    var node = SKSpriteNode(imageNamed:"MoveSpace")
-    var tHeight = 60;
-    var tWidth = 60;
-    init() {
-        self.node.size = CGSize(width:tHeight,height:tWidth)
-        self.node.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-    }
+
+class Tile:GKEntity {
+    
+   // var node = SKSpriteNode(imageNamed:"MoveSpace")
+//    var tHeight = 60;
+//    var tWidth = 60;
+    
+//    init() {
+//        self.node.size = CGSize(width:tHeight,height:tWidth)
+//        self.node.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+//    }
 }

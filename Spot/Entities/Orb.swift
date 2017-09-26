@@ -7,3 +7,21 @@
 //
 
 import Foundation
+import GameplayKit
+
+class Orb: GKEntity {
+    var power = 0;
+ 
+    init(power: Int) {
+        super.init()
+        self.power = power;
+        
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+    
+}
