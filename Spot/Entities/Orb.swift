@@ -11,7 +11,7 @@ import GameplayKit
 
 class Orb: GKEntity {
  
-    init(power: Int) {
+    init() {
         super.init()
         
     }
