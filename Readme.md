@@ -1,3 +1,3 @@
 # Spot
 
-A simple, retro-style game with Dynamic Tiles and Orbs. Maneuver your way around tiles while trying to evade Orbs and collect tokens.
+A  retro-style game with Dynamic Tiles and Orbs. Maneuver from tile to tile to collecting tokens and evading Orbs.
