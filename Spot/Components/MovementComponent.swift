@@ -27,16 +27,22 @@ class MovementComponent: GKComponent {
     
     var speed:Speed?
     var direction: Direction?
-    var currentPosition:Tile
-    var canMove:bool
+    var currentPosition:CGPoint?
+    var canMove:Bool = true
     
-    init(position:Tile){
-        self.currentPosition = position
+    override init(){
         super.init()
     }
     
-    func MoveTo(posiion:Tile){
-        self.currentPosition = posiion
+    func MoveTo(newPosiion:CGPoint){
+        
+        if let currentNode = self.entity?.component(ofType: SpriteComponent.self)?.node{
+            
+            let moveAction = SKAction.move(to: newPosiion, duration: 0.1)
+            
+            //run the action
+            currentNode.run(moveAction)
+        }
         
     }
     

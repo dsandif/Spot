@@ -22,16 +22,16 @@ class GameBoard {
     func LoadBoardPieces() {
 
         
-        for idx in 0...(numSpaces-1) {
+        for _ in 0...(numSpaces-1) {
 
-            var moveSpace = Tile()
+            var moveSpace = Tile(imageName: "")
             board.append(moveSpace)
             
 
             var xVal = 0
             var yVal = 0
-
-            moveSpace.node.position = CGPoint(x:xVal,y:yVal)
+//
+//            moveSpace.node.position = CGPoint(x:xVal,y:yVal)
         }
     }
     
