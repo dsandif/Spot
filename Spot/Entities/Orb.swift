@@ -12,6 +12,7 @@ import GameplayKit
 class Orb: GKEntity {
     var pHeight = 50;
     var pWidth = 50;
+
     
     init(imageName:String) {
         super.init()
@@ -21,7 +22,13 @@ class Orb: GKEntity {
         
         //add size
         spriteComponent.node.size = CGSize(width:pWidth,height:pHeight)
-        
+        let orbNode = spriteComponent.node
+        orbNode.physicsBody = SKPhysicsBody(circleOfRadius: orbNode.size.width/2)
+        orbNode.physicsBody?.categoryBitMask = BitMasks.OrbCategory.rawValue
+        orbNode.physicsBody?.contactTestBitMask = BitMasks.PlayerCategory.rawValue
+        orbNode.physicsBody?.isDynamic = true
+        orbNode.physicsBody?.affectedByGravity = false
+
         addComponent(spriteComponent)
         
         let damageComponent = DamageComponent(power:10)

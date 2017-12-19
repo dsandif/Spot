@@ -3,7 +3,7 @@
 TO DO LIST
 __________________
  1: Setup entity collision recognition
-    - when an Orb collides with a player, the players life count should go down
+    * when an Orb collides with a player, the players life count should go down
     - when an orb collides with another orb, they should both blow up using particles
  
  2: Player Movement

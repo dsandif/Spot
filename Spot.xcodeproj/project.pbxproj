@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A61798881FE8E1EF000342EC /* ToDoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A61798871FE8E1EF000342EC /* ToDoList.swift */; };
+		A654CCA31FE9723E00641B23 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A654CCA21FE9723E00641B23 /* Constants.swift */; };
 		A69D55131F79EA660052B16E /* Orb.swift in Sources */ = {isa = PBXBuildFile; fileRef = A69D55121F79EA660052B16E /* Orb.swift */; };
 		A69D55151F79EE4A0052B16E /* Prize.swift in Sources */ = {isa = PBXBuildFile; fileRef = A69D55141F79EE4A0052B16E /* Prize.swift */; };
 		A69D55171F79FCC10052B16E /* HealthComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A69D55161F79FCC10052B16E /* HealthComponent.swift */; };
@@ -32,6 +33,7 @@
 
 /* Begin PBXFileReference section */
 		A61798871FE8E1EF000342EC /* ToDoList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoList.swift; sourceTree = "<group>"; };
+		A654CCA21FE9723E00641B23 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		A69D55121F79EA660052B16E /* Orb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Orb.swift; sourceTree = "<group>"; };
 		A69D55141F79EE4A0052B16E /* Prize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prize.swift; sourceTree = "<group>"; };
 		A69D55161F79FCC10052B16E /* HealthComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthComponent.swift; sourceTree = "<group>"; };
@@ -75,6 +77,7 @@
 				A69D551D1F7B140C0052B16E /* SpriteComponent.swift */,
 				A69D55181F7A00CE0052B16E /* MovementComponent.swift */,
 				A69D551A1F7A0BCD0052B16E /* ScoreComponent.swift */,
+				A654CCA21FE9723E00641B23 /* Constants.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -220,6 +223,7 @@
 				A69D55131F79EA660052B16E /* Orb.swift in Sources */,
 				A69D551B1F7A0BCD0052B16E /* ScoreComponent.swift in Sources */,
 				A69D55171F79FCC10052B16E /* HealthComponent.swift in Sources */,
+				A654CCA31FE9723E00641B23 /* Constants.swift in Sources */,
 				A61798881FE8E1EF000342EC /* ToDoList.swift in Sources */,
 				A69D55211F7B140D0052B16E /* Images.swift in Sources */,
 				A6EFC4CD1F76C1D000E22041 /* Player.swift in Sources */,

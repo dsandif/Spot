@@ -14,6 +14,7 @@ class Player: GKEntity {
     
     var pHeight = 50;
     var pWidth = 50;
+
     
     init(imageName:String) {
         super.init()
@@ -23,7 +24,12 @@ class Player: GKEntity {
         
         //add size
         spriteComponent.node.size = CGSize(width:pWidth,height:pHeight)
-        
+        var playerNode = spriteComponent.node
+        playerNode.physicsBody = SKPhysicsBody(rectangleOf: playerNode.size)
+        playerNode.physicsBody?.categoryBitMask = BitMasks.PlayerCategory.rawValue
+        playerNode.physicsBody?.contactTestBitMask = BitMasks.OrbCategory.rawValue
+        playerNode.physicsBody?.isDynamic = false
+
         addComponent(spriteComponent)
         
         let movementComponent = MovementComponent()
@@ -32,9 +38,8 @@ class Player: GKEntity {
         let scoreComponent = ScoreComponent(points:0);
         addComponent(scoreComponent)
         
-        let healthComponent = HealthComponent(health:0)
+        let healthComponent = HealthComponent(health:3)
         addComponent(healthComponent)
-        
     
     }
     
