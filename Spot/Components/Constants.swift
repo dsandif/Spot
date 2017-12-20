@@ -18,6 +18,15 @@ enum BitMasks:UInt32 {
 
 }
 
+enum Points:Int {
+    case StartingPoints = 0
+    case MissedOrb = 5
+    case MovementPoint = 10
+    case BoltPoints = 25
+    case LaserPoints = 50
+    case StarPoints = 100
+}
+
 
 
 extension Float{

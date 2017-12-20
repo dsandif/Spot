@@ -15,6 +15,8 @@ class SceneLevel_1:SKScene,SKPhysicsContactDelegate{
     
     var player = Player(imageName:"Rocket");
     var playingArea = GameBoard();
+    let label = SKLabelNode(text: "Score:")
+    var prizeTimer = Timer()
     
     override func didMove(to view: SKView) {
         
@@ -34,14 +36,28 @@ class SceneLevel_1:SKScene,SKPhysicsContactDelegate{
 
         
         //add score label
-        let playerScore = player.component(ofType: HealthComponent.self)?.health
-        let label = SKLabelNode(text: "Score:" + "\(playerScore!)")
+//        let playerScore = player.component(ofType: HealthComponent.self)?.health
         label.position.x = (self.frame.width/4)
         label.position.y = (self.frame.height/2)-50
         addChild(label)
         
         addGestures(view:view)
         
+        
+        startPrizeTimer()
+        
+        
+    }
+    
+    func startPrizeTimer(){
+        let timeIntervalInSeconds = 15.0
+        let selector = #selector(self.spawnPrize)
+        prizeTimer = Timer.scheduledTimer(timeInterval: timeIntervalInSeconds, target: self, selector: selector, userInfo: nil, repeats: true)
+    }
+    
+    func spawnPrize() {
+        
+        var newPrize = Prize()
     }
     
     // this function should eventually be run at random intervals, variables dealing with
@@ -124,24 +140,68 @@ class SceneLevel_1:SKScene,SKPhysicsContactDelegate{
         }
     }
     
+    
+    func updateScoreLabel() {
+        
+        let playerScore = player.component(ofType: ScoreComponent.self)?.points
+        label.text = "Score:" + "\(playerScore!)"
+    }
+    
     func swipeLeft(sender: UIGestureRecognizer){
         
         let movementComponent = player.component(ofType: MovementComponent.self)
-        movementComponent?.MoveTo(newDirection: .Left)
+        var didMove = movementComponent?.MoveTo(newDirection: .Left)
+        
+        //give the player points for making a move
+        if didMove == true {
+            let scoringComponent = player.component(ofType: ScoreComponent.self)
+            scoringComponent?.UpdatePoints(amount: Points.MovementPoint)
+            
+            //update the label
+            updateScoreLabel()
+        }
     }
     
     func swipeRight(sender: UIGestureRecognizer){
+        
         let movementComponent = player.component(ofType: MovementComponent.self)
-        movementComponent?.MoveTo(newDirection: .Right)
+        var didMove = movementComponent?.MoveTo(newDirection: .Right)
+        
+        //give the player points for making a move
+        if didMove == true {
+            let scoringComponent = player.component(ofType: ScoreComponent.self)
+            scoringComponent?.UpdatePoints(amount: Points.MovementPoint)
+            
+            //update the label
+            updateScoreLabel()
+        }
     }
     
     func swipeUp(sender: UIGestureRecognizer){
         let movementComponent = player.component(ofType: MovementComponent.self)
-        movementComponent?.MoveTo(newDirection: .Up)
+        var didMove = movementComponent?.MoveTo(newDirection: .Up)
+        
+        //give the player points for making a move
+        if didMove == true {
+            let scoringComponent = player.component(ofType: ScoreComponent.self)
+            scoringComponent?.UpdatePoints(amount: Points.MovementPoint)
+            
+            //update the label
+            updateScoreLabel()
+        }
     }
     
     func swipeDown(sender: UIGestureRecognizer){
         let movementComponent = player.component(ofType: MovementComponent.self)
-        movementComponent?.MoveTo(newDirection: .Down)
+        var didMove = movementComponent?.MoveTo(newDirection: .Down)
+        
+        //give the player points for making a move
+        if didMove == true {
+            let scoringComponent = player.component(ofType: ScoreComponent.self)
+            scoringComponent?.UpdatePoints(amount: Points.MovementPoint)
+            
+            //update the label
+            updateScoreLabel()
+        }
     }
 }

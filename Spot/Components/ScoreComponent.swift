@@ -12,14 +12,14 @@ import GameplayKit
 class ScoreComponent: GKComponent {
     var points:Int
     
-    init(points:Int){
-        self.points = points
+    init(points:Points){
+        self.points = points.rawValue
         super.init()
         
     }
     
-    func UpdatePoints(amount:Int){
-        self.points += amount
+    func UpdatePoints(amount:Points){
+        self.points += amount.rawValue
     }
     
     func CollectPrize(prize:Prize){

@@ -36,7 +36,8 @@ class MovementComponent: GKComponent {
 
     }
     
-    func MoveTo(newDirection:Direction){
+    func MoveTo(newDirection:Direction) -> Bool{
+        var didMove = false;
         var newPosition:CGPoint
         currentPosition = self.entity?.component(ofType: SpriteComponent.self)?.node.position
         
@@ -67,12 +68,13 @@ class MovementComponent: GKComponent {
                 
                 //update the current position
                 currentPosition = newPosition
+                didMove = true
             }
+        }else{
+            didMove = false
         }
         
-
-        
-        print("current Position:", newPosition)
+        return didMove
     }
     
     required init?(coder aDecoder: NSCoder) {

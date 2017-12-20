@@ -36,7 +36,7 @@ class Player: GKEntity {
         let movementComponent = MovementComponent()
         addComponent(movementComponent)
         
-        let scoreComponent = ScoreComponent(points:0);
+        let scoreComponent = ScoreComponent(points:Points.StartingPoints);
         addComponent(scoreComponent)
         
         let healthComponent = HealthComponent(health:3)
