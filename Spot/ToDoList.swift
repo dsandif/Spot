@@ -7,7 +7,7 @@ __________________
     - when an orb collides with another orb, they should both blow up using particles
  
  2: Player Movement
-    - setup system for detecting swipes and move a player in that direction
+    * setup system for detecting swipes and move a player in that direction
     - setup 9 tile entities on the the screen in a 3x3 box to start
     - create a system for removing and re-spawning tiles
  

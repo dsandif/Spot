@@ -14,7 +14,7 @@ class Player: GKEntity {
     
     var pHeight = 50;
     var pWidth = 50;
-
+    
     
     init(imageName:String) {
         super.init()
@@ -24,6 +24,7 @@ class Player: GKEntity {
         
         //add size
         spriteComponent.node.size = CGSize(width:pWidth,height:pHeight)
+        
         var playerNode = spriteComponent.node
         playerNode.physicsBody = SKPhysicsBody(rectangleOf: playerNode.size)
         playerNode.physicsBody?.categoryBitMask = BitMasks.PlayerCategory.rawValue

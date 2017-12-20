@@ -17,30 +17,35 @@ class SceneLevel_1:SKScene,SKPhysicsContactDelegate{
     var playingArea = GameBoard();
     
     override func didMove(to view: SKView) {
+        
         // Set the scale mode to scale to fit the window
         self.scaleMode = .aspectFill
-//        let borderBody = SKPhysicsBody(edgeLoopFrom: self.frame)
-//
-//        borderBody.friction = 0
-//
-//        self.physicsBody = borderBody
+        let borderBody = SKPhysicsBody(edgeLoopFrom: self.frame)
+        borderBody.friction = 0
+        
+        self.physicsBody = borderBody
         physicsWorld.contactDelegate = self
         
-//        addGestures(view:view)
-        
+        //add the player to the screen with a boundary of play
         if let playerSpriteNode = player.component(ofType: SpriteComponent.self)?.node{
+            player.component(ofType: MovementComponent.self)?.boundary = frame
             self.addChild(playerSpriteNode);
         }
 
         
-        let label = SKLabelNode(text: "Score:")
+        //add score label
+        let playerScore = player.component(ofType: HealthComponent.self)?.health
+        let label = SKLabelNode(text: "Score:" + "\(playerScore!)")
         label.position.x = (self.frame.width/4)
         label.position.y = (self.frame.height/2)-50
         addChild(label)
         
+        addGestures(view:view)
+        
     }
     
-    //this function should eventually be run at random intervals, variables dealing with velocity will depend on the current level -- higher levels 
+    // this function should eventually be run at random intervals, variables dealing with
+    // velocity will depend on the current level -- higher levels
     func spawnOrb() {
         let enemyOrb = Orb(imageName:"spaceMeteors_001");
         var orbSpriteNode = enemyOrb.component(ofType: SpriteComponent.self)?.node
@@ -79,10 +84,10 @@ class SceneLevel_1:SKScene,SKPhysicsContactDelegate{
     }
     
     func addGestures(view:SKView) {
-        var leftSwipe = UISwipeGestureRecognizer(target: self, action: Selector("handleSwipes:"))
-        var rightSwipe = UISwipeGestureRecognizer(target: self, action: Selector("handleSwipes:"))
-        var upSwipe = UISwipeGestureRecognizer(target: self, action: Selector("handleSwipes:"))
-        var downSwipe = UISwipeGestureRecognizer(target: self, action: Selector("handleSwipes:"))
+        var leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(swipeLeft))
+        var rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(swipeRight))
+        var upSwipe = UISwipeGestureRecognizer(target: self, action: #selector(swipeUp))
+        var downSwipe = UISwipeGestureRecognizer(target: self, action: #selector(swipeDown))
         
         leftSwipe.direction = .left
         rightSwipe.direction = .right
@@ -115,8 +120,28 @@ class SceneLevel_1:SKScene,SKPhysicsContactDelegate{
         //update the players score
         if let playerHealthComponent = player.component(ofType: HealthComponent.self){
             playerHealthComponent.UpdateHealth(amount: -1)
-            print(playerHealthComponent.health)
+
         }
     }
     
+    func swipeLeft(sender: UIGestureRecognizer){
+        
+        let movementComponent = player.component(ofType: MovementComponent.self)
+        movementComponent?.MoveTo(newDirection: .Left)
+    }
+    
+    func swipeRight(sender: UIGestureRecognizer){
+        let movementComponent = player.component(ofType: MovementComponent.self)
+        movementComponent?.MoveTo(newDirection: .Right)
+    }
+    
+    func swipeUp(sender: UIGestureRecognizer){
+        let movementComponent = player.component(ofType: MovementComponent.self)
+        movementComponent?.MoveTo(newDirection: .Up)
+    }
+    
+    func swipeDown(sender: UIGestureRecognizer){
+        let movementComponent = player.component(ofType: MovementComponent.self)
+        movementComponent?.MoveTo(newDirection: .Down)
+    }
 }

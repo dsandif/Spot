@@ -28,7 +28,12 @@ class Orb: GKEntity {
         orbNode.physicsBody?.contactTestBitMask = BitMasks.PlayerCategory.rawValue
         orbNode.physicsBody?.isDynamic = true
         orbNode.physicsBody?.affectedByGravity = false
-
+        
+        //setup rotation action
+        let oneRevolution:SKAction = SKAction.rotate(byAngle: CGFloat.pi * 2, duration: 1)
+        let repeatRotation:SKAction = SKAction.repeatForever(oneRevolution)
+        orbNode.run(repeatRotation)
+        
         addComponent(spriteComponent)
         
         let damageComponent = DamageComponent(power:10)
