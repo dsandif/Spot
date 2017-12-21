@@ -23,7 +23,7 @@ __________________
  
  
  4: Scoring
-    - A player should start the game with 3 lives, Orbs subtract from that as they collide with the player
+    * A player should start the game with 3 lives, Orbs subtract from that as they collide with the player
     - Score should be updated constantly in milliseconds
     - The game is over when a player loses 3 lives
  
@@ -35,6 +35,31 @@ __________________
  
 
  
+ 
+ 
+ 
+ 
+ PART 2 - Finish Up
+ ======================
+  - Rotate character in direction of swipe and the nmake him upright again
+  - Keep track of prizes and remove them after 10 seconds
+  - show 3 small lives in the top right corner under the score and update them as orbs hit the player
+  - setup randomness for:
+    == Prizetypes (icon and prize value should match)
+    == Prize Color (images, and image names may need to be changed)
+ 
+  - Create the end of the game
+    == Setup the end of game scene
+        Show Final Score
+        Show Start Over
+ 
+ 
+ 
+ 
+ 
+ Part 3 - Game Center Integration
+ ==================================
+ TBD
  
  
  

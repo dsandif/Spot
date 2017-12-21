@@ -13,9 +13,10 @@ enum BitMasks:UInt32 {
     case PlayerCategory
     case OrbCategory
     case TileCategory
-    case PrizeCategory
+    case BoltCategory
+    case LaserCategory
+    case StarCategory
     case BorderCategory
-
 }
 
 enum Points:Int {

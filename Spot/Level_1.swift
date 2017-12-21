@@ -36,7 +36,6 @@ class SceneLevel_1:SKScene,SKPhysicsContactDelegate{
 
         
         //add score label
-//        let playerScore = player.component(ofType: HealthComponent.self)?.health
         label.position.x = (self.frame.width/4)
         label.position.y = (self.frame.height/2)-50
         addChild(label)
@@ -50,14 +49,24 @@ class SceneLevel_1:SKScene,SKPhysicsContactDelegate{
     }
     
     func startPrizeTimer(){
-        let timeIntervalInSeconds = 15.0
+        let timeIntervalInSeconds = 2.0
         let selector = #selector(self.spawnPrize)
         prizeTimer = Timer.scheduledTimer(timeInterval: timeIntervalInSeconds, target: self, selector: selector, userInfo: nil, repeats: true)
     }
     
     func spawnPrize() {
         
-        var newPrize = Prize()
+        let newPrize = Prize(value: Points.LaserPoints,prizeType: PrizeType.Points,imageName: "laserBlue10")
+        var prizeSpriteNode = newPrize.component(ofType: SpriteComponent.self)?.node
+
+        
+        let yPosition = randomBetweenNumbers(firstNum: -self.frame.height/2, secondNum:  self.frame.height/2)
+        let xPosition = randomBetweenNumbers(firstNum: -self.frame.width/2, secondNum:  self.frame.width/2)
+        
+        prizeSpriteNode?.position = CGPoint(x:xPosition,y:yPosition)
+        self.addChild(prizeSpriteNode!)
+        
+
     }
     
     // this function should eventually be run at random intervals, variables dealing with
@@ -129,14 +138,74 @@ class SceneLevel_1:SKScene,SKPhysicsContactDelegate{
             orbHitPlayer(playerNode: itemB.node!, orbNode: itemA.node!)
         }
         
+        //contact between player and Bolt
+        if (itemA.categoryBitMask == BitMasks.PlayerCategory.rawValue && itemB.categoryBitMask == BitMasks.BoltCategory.rawValue){
+            
+            playerPrizeContact(playerNode: itemA.node!, prizeNode: itemB.node!)
+            
+        }else if(itemA.categoryBitMask == BitMasks.BoltCategory.rawValue && itemB.categoryBitMask == BitMasks.PlayerCategory.rawValue){
+            
+            playerPrizeContact(playerNode: itemB.node!, prizeNode: itemA.node!)
+        }
+        
+        
+        //contact between player and Laser
+        if (itemA.categoryBitMask == BitMasks.PlayerCategory.rawValue && itemB.categoryBitMask == BitMasks.LaserCategory.rawValue){
+            
+            playerPrizeContact(playerNode: itemA.node!, prizeNode: itemB.node!)
+            
+        }else if(itemA.categoryBitMask == BitMasks.LaserCategory.rawValue && itemB.categoryBitMask == BitMasks.PlayerCategory.rawValue){
+            
+            playerPrizeContact(playerNode: itemB.node!, prizeNode: itemA.node!)
+        }
+        
+        
+        //contact between player and Star
+        if (itemA.categoryBitMask == BitMasks.PlayerCategory.rawValue && itemB.categoryBitMask == BitMasks.StarCategory.rawValue){
+            
+            playerPrizeContact(playerNode: itemA.node!, prizeNode: itemB.node!)
+            
+        }else if(itemA.categoryBitMask == BitMasks.StarCategory.rawValue && itemB.categoryBitMask == BitMasks.PlayerCategory.rawValue){
+            
+            playerPrizeContact(playerNode: itemB.node!, prizeNode: itemA.node!)
+        }
+    }
+    
+    func playerPrizeContact(playerNode:SKNode,prizeNode:SKNode){
+        //get the category from the bitmask on the physics body
+        var pointsCollected:Points
+        
+        switch prizeNode.physicsBody?.categoryBitMask {
+            
+            case BitMasks.BoltCategory.rawValue?:
+                pointsCollected = Points.BoltPoints
+            
+            case BitMasks.LaserCategory.rawValue?:
+                pointsCollected = Points.LaserPoints
+            
+            case BitMasks.StarCategory.rawValue?:
+                pointsCollected = Points.StarPoints
+            
+        default:
+            pointsCollected = Points.StartingPoints
+        }
+        
+        //add the points to the players scoring component
+        if let playerScoreComponent = player.component(ofType: ScoreComponent.self){
+            playerScoreComponent.CollectPrize(amount: pointsCollected)
+            updateScoreLabel()
+            prizeNode.removeFromParent()
+        }
+        
+        
+        
     }
     
     func orbHitPlayer(playerNode:SKNode,orbNode:SKNode) {
         
-        //update the players score
+        //update the players health
         if let playerHealthComponent = player.component(ofType: HealthComponent.self){
             playerHealthComponent.UpdateHealth(amount: -1)
-
         }
     }
     
