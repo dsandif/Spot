@@ -41,9 +41,10 @@ __________________
  
  PART 2 - Finish Up
  ======================
-  - Rotate character in direction of swipe and the nmake him upright again
-  - Keep track of prizes and remove them after 10 seconds
-  - show 3 small lives in the top right corner under the score and update them as orbs hit the player
+  * Rotate character in direction of swipe and the nmake him upright again
+  * Keep track of prizes and remove them when they are caught
+  * Set a variable limit of prizes (init to 5)
+  * show 3 small lives in the top right corner under the score and update them as orbs hit the player
   - setup randomness for:
     == Prizetypes (icon and prize value should match)
     == Prize Color (images, and image names may need to be changed)

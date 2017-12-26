@@ -10,7 +10,7 @@ import Foundation
 import GameplayKit
 
 class HealthComponent: GKComponent {
-    var health = 0;
+    var health = 3;
     
     init(health:Int) {
         super.init()

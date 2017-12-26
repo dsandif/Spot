@@ -14,9 +14,11 @@ import SpriteKit
 class SceneLevel_1:SKScene,SKPhysicsContactDelegate{
     
     var player = Player(imageName:"Rocket");
-    var playingArea = GameBoard();
     let label = SKLabelNode(text: "Score:")
     var prizeTimer = Timer()
+    var currentPrizeNodes = [SKSpriteNode]()
+    var currentPrizeLimit = 5
+    var lives = [SKSpriteNode]()
     
     override func didMove(to view: SKView) {
         
@@ -40,6 +42,22 @@ class SceneLevel_1:SKScene,SKPhysicsContactDelegate{
         label.position.y = (self.frame.height/2)-50
         addChild(label)
         
+        
+        for index in 0...2 {
+            //add 3 health icons based on the players image
+            var lifeIcon = SKSpriteNode()
+            lifeIcon.texture = player.component(ofType: SpriteComponent.self)?.node.texture?.copy() as! SKTexture
+            lifeIcon.size.height = 15.0
+            lifeIcon.size.width = 15.0
+            lifeIcon.position.x = (self.frame.width/4) + (lifeIcon.size.width * (CGFloat)(index))
+            lifeIcon.position.y = label.position.y - 15
+            
+            lives.append(lifeIcon)
+            self.addChild(lifeIcon)
+        }
+        
+        
+        
         addGestures(view:view)
         
         
@@ -52,20 +70,31 @@ class SceneLevel_1:SKScene,SKPhysicsContactDelegate{
         let timeIntervalInSeconds = 2.0
         let selector = #selector(self.spawnPrize)
         prizeTimer = Timer.scheduledTimer(timeInterval: timeIntervalInSeconds, target: self, selector: selector, userInfo: nil, repeats: true)
+        
+        
     }
     
-    func spawnPrize() {
-        
-        let newPrize = Prize(value: Points.LaserPoints,prizeType: PrizeType.Points,imageName: "laserBlue10")
-        var prizeSpriteNode = newPrize.component(ofType: SpriteComponent.self)?.node
-
-        
-        let yPosition = randomBetweenNumbers(firstNum: -self.frame.height/2, secondNum:  self.frame.height/2)
-        let xPosition = randomBetweenNumbers(firstNum: -self.frame.width/2, secondNum:  self.frame.width/2)
-        
-        prizeSpriteNode?.position = CGPoint(x:xPosition,y:yPosition)
-        self.addChild(prizeSpriteNode!)
-        
+    func removePrize() {
+        //get a random number between 0 and the size of the array
+        let randomPrize = currentPrizeNodes[Int(arc4random_uniform(UInt32(currentPrizeNodes.count)))]
+        randomPrize.removeFromParent()
+    }
+    
+    @objc func spawnPrize() {
+        if currentPrizeNodes.count < currentPrizeLimit {
+            
+            let newPrize = Prize(value: Points.LaserPoints,prizeType: PrizeType.Points,imageName: "laserBlue10")
+            var prizeSpriteNode = newPrize.component(ofType: SpriteComponent.self)?.node
+            
+            let yPosition = randomBetweenNumbers(firstNum: -self.frame.height/2, secondNum:  self.frame.height/2)
+            let xPosition = randomBetweenNumbers(firstNum: -self.frame.width/2, secondNum:  self.frame.width/2)
+            
+            prizeSpriteNode?.position = CGPoint(x:xPosition,y:yPosition)
+            self.addChild(prizeSpriteNode!)
+            
+            //add it to the list of nodes up to the prize Limit
+            currentPrizeNodes.append(prizeSpriteNode!)
+        }
 
     }
     
@@ -195,6 +224,9 @@ class SceneLevel_1:SKScene,SKPhysicsContactDelegate{
             playerScoreComponent.CollectPrize(amount: pointsCollected)
             updateScoreLabel()
             prizeNode.removeFromParent()
+            currentPrizeNodes.remove(at: currentPrizeNodes.index(of: prizeNode as! SKSpriteNode)!)
+            
+
         }
         
         
@@ -202,21 +234,52 @@ class SceneLevel_1:SKScene,SKPhysicsContactDelegate{
     }
     
     func orbHitPlayer(playerNode:SKNode,orbNode:SKNode) {
+        var fadeInDuration = 0.0
+        var fadeOutDuration = 0.0
         
         //update the players health
         if let playerHealthComponent = player.component(ofType: HealthComponent.self){
             playerHealthComponent.UpdateHealth(amount: -1)
+            lives.popLast()?.removeFromParent()
+            
+            
+            switch lives.count {
+                
+                case 0:
+                    endGame()
+                
+                case 1:
+                    fadeOutDuration = 0.3
+                    fadeInDuration = 0.4
+                    fadePlayer(fadeInDuration: fadeInDuration,fadeOutDuration: fadeOutDuration)
+                
+                case 2:
+                    fadeOutDuration = 0.5
+                    fadeInDuration = 0.6
+                    fadePlayer(fadeInDuration: fadeInDuration,fadeOutDuration: fadeOutDuration)
+
+                default:
+                    player.component(ofType: SpriteComponent.self)?.node.removeAllActions()
+                    player.component(ofType: SpriteComponent.self)?.node.run(SKAction.fadeIn(withDuration: 0.0))
+            }
+            
+            
         }
     }
     
-    
+    func fadePlayer(fadeInDuration:Double,fadeOutDuration:Double) {
+        player.component(ofType: SpriteComponent.self)?.node.removeAllActions()
+        //start fading the player
+        let sequence = SKAction.repeatForever(SKAction.sequence([SKAction.fadeAlpha(to: 0.1, duration: fadeOutDuration),SKAction.fadeAlpha(to: 0.9, duration: fadeInDuration)]))
+            player.component(ofType: SpriteComponent.self)?.node.run(sequence)
+    }
     func updateScoreLabel() {
         
         let playerScore = player.component(ofType: ScoreComponent.self)?.points
         label.text = "Score:" + "\(playerScore!)"
     }
     
-    func swipeLeft(sender: UIGestureRecognizer){
+    @objc func swipeLeft(sender: UIGestureRecognizer){
         
         let movementComponent = player.component(ofType: MovementComponent.self)
         var didMove = movementComponent?.MoveTo(newDirection: .Left)
@@ -231,7 +294,7 @@ class SceneLevel_1:SKScene,SKPhysicsContactDelegate{
         }
     }
     
-    func swipeRight(sender: UIGestureRecognizer){
+    @objc func swipeRight(sender: UIGestureRecognizer){
         
         let movementComponent = player.component(ofType: MovementComponent.self)
         var didMove = movementComponent?.MoveTo(newDirection: .Right)
@@ -246,7 +309,7 @@ class SceneLevel_1:SKScene,SKPhysicsContactDelegate{
         }
     }
     
-    func swipeUp(sender: UIGestureRecognizer){
+    @objc func swipeUp(sender: UIGestureRecognizer){
         let movementComponent = player.component(ofType: MovementComponent.self)
         var didMove = movementComponent?.MoveTo(newDirection: .Up)
         
@@ -260,7 +323,7 @@ class SceneLevel_1:SKScene,SKPhysicsContactDelegate{
         }
     }
     
-    func swipeDown(sender: UIGestureRecognizer){
+    @objc func swipeDown(sender: UIGestureRecognizer){
         let movementComponent = player.component(ofType: MovementComponent.self)
         var didMove = movementComponent?.MoveTo(newDirection: .Down)
         
@@ -272,5 +335,12 @@ class SceneLevel_1:SKScene,SKPhysicsContactDelegate{
             //update the label
             updateScoreLabel()
         }
+    }
+    
+    func endGame(){
+        // restart the game
+        let scene = SceneLevel_1(size: CGSize(width: (self.view?.frame.width)!, height: (self.view?.frame.height)!))
+        scene.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        self.view!.presentScene(scene)
     }
 }

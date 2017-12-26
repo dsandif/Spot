@@ -39,17 +39,22 @@ class MovementComponent: GKComponent {
     func MoveTo(newDirection:Direction) -> Bool{
         var didMove = false;
         var newPosition:CGPoint
+        var rotationAngle = CGFloat(0);
         currentPosition = self.entity?.component(ofType: SpriteComponent.self)?.node.position
         
         switch newDirection {
             case .Left:
                 newPosition = CGPoint(x:(currentPosition?.x)! - 50.0,y: (currentPosition?.y)!)
+                rotationAngle = CGFloat(Double.pi / 2)
             case .Right:
                 newPosition = CGPoint(x:(currentPosition?.x)! + 50.0,y: (currentPosition?.y)!)
+                rotationAngle = -CGFloat(Double.pi / 2)
             case .Up:
                 newPosition = CGPoint(x:(currentPosition?.x)! ,y: (currentPosition?.y)! + 50.0)
+                rotationAngle = 0.0
             case .Down:
                 newPosition = CGPoint(x:(currentPosition?.x)! ,y: (currentPosition?.y)! - 50.0)
+                rotationAngle = CGFloat(Double.pi)
         }
         
         //round to prevent odd values
@@ -61,10 +66,18 @@ class MovementComponent: GKComponent {
             //setup the movement action to the new position
             if let currentNode = self.entity?.component(ofType: SpriteComponent.self)?.node{
                 
-                let moveAction = SKAction.move(to: newPosition, duration: 0.1)
+                //rotate
+                let turnAction:SKAction = SKAction.rotate(byAngle: CGFloat(rotationAngle) , duration: 0)
+                //move character
+                let moveAction = SKAction.move(to: newPosition, duration: 0.13)
+                //rotate back to the original position
+                //let turnbackAction = SKAction.rotate(byAngle: -CGFloat(rotationAngle), duration: 0.0)
+                let turnbackAction = SKAction.rotate(toAngle: 0, duration: 0)
+                //setup the previous 3 lines as a movement action
+                let movementSequence = SKAction.sequence([turnAction,moveAction,turnbackAction])
                 
                 //run the action
-                currentNode.run(moveAction)
+                currentNode.run(movementSequence)
                 
                 //update the current position
                 currentPosition = newPosition
