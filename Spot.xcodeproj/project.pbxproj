@@ -103,6 +103,7 @@
 				A69D551A1F7A0BCD0052B16E /* ScoreComponent.swift */,
 				A654CCA21FE9723E00641B23 /* Constants.swift */,
 				A6639A811FEB3C1000E01EE6 /* ValueComponent.swift */,
+				A69D551E1F7B140C0052B16E /* Images.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -142,7 +143,6 @@
 				A64C47291F79C11A00C75087 /* Entities */,
 				A64C47281F79C11200C75087 /* Components */,
 				A6EF17231F7761BE008E3970 /* Untitled 2.png */,
-				A69D551E1F7B140C0052B16E /* Images.swift */,
 				A6D0A3861F76299B002165D8 /* AppDelegate.swift */,
 				A6D0A38E1F76299B002165D8 /* GameViewController.swift */,
 				A6EFC4C81F76B04A00E22041 /* Scenes */,

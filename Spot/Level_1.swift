@@ -19,6 +19,8 @@ class SceneLevel_1:SKScene,SKPhysicsContactDelegate{
     var currentPrizeNodes = [SKSpriteNode]()
     var currentPrizeLimit = 5
     var lives = [SKSpriteNode]()
+    var lifeFrequencyCounter = 0
+    let addLifeFrequency = 4
     
     override func didMove(to view: SKView) {
         
@@ -81,27 +83,43 @@ class SceneLevel_1:SKScene,SKPhysicsContactDelegate{
     }
     
     @objc func spawnPrize() {
+        
         if currentPrizeNodes.count < currentPrizeLimit {
-            
-            let newPrize = Prize(value: Points.LaserPoints,prizeType: PrizeType.Points,imageName: "laserBlue10")
-            var prizeSpriteNode = newPrize.component(ofType: SpriteComponent.self)?.node
+            let newPrize = Prize()
+            let prizeSpriteNode = newPrize.component(ofType: SpriteComponent.self)?.node
             
             let yPosition = randomBetweenNumbers(firstNum: -self.frame.height/2, secondNum:  self.frame.height/2)
             let xPosition = randomBetweenNumbers(firstNum: -self.frame.width/2, secondNum:  self.frame.width/2)
             
             prizeSpriteNode?.position = CGPoint(x:xPosition,y:yPosition)
-            self.addChild(prizeSpriteNode!)
-            
+        
             //add it to the list of nodes up to the prize Limit
-            currentPrizeNodes.append(prizeSpriteNode!)
+            if prizeSpriteNode?.physicsBody?.categoryBitMask == BitMasks.ExtraLifeCategory.rawValue{
+                for item in currentPrizeNodes{
+                    if(item.physicsBody?.categoryBitMask == BitMasks.ExtraLifeCategory.rawValue){
+                        return
+                    }
+                }
+                
+                if lifeFrequencyCounter == addLifeFrequency{
+                    self.addChild(prizeSpriteNode!)
+                    currentPrizeNodes.append(prizeSpriteNode!)
+                    lifeFrequencyCounter = 0
+                }else{
+                    lifeFrequencyCounter = lifeFrequencyCounter + 1
+                }
+                
+            }else{
+                self.addChild(prizeSpriteNode!)
+                currentPrizeNodes.append(prizeSpriteNode!)
+            }
         }
-
     }
     
     // this function should eventually be run at random intervals, variables dealing with
     // velocity will depend on the current level -- higher levels
     func spawnOrb() {
-        let enemyOrb = Orb(imageName:"spaceMeteors_001");
+        let enemyOrb = Orb(imageName: PrizeImage.EnemyOrb.rawValue);
         var orbSpriteNode = enemyOrb.component(ofType: SpriteComponent.self)?.node
         
         let yPosition = randomBetweenNumbers(firstNum: -self.frame.height/2, secondNum:  self.frame.height/2)
@@ -259,7 +277,7 @@ class SceneLevel_1:SKScene,SKPhysicsContactDelegate{
                     fadePlayer(fadeInDuration: fadeInDuration,fadeOutDuration: fadeOutDuration)
 
                 default:
-                    player.component(ofType: SpriteComponent.self)?.node.removeAllActions()
+                    player.component(ofType: SpriteComponent.self)?.node.removeAction(forKey: "fadeSequence")
                     player.component(ofType: SpriteComponent.self)?.node.run(SKAction.fadeIn(withDuration: 0.0))
             }
             
@@ -268,10 +286,10 @@ class SceneLevel_1:SKScene,SKPhysicsContactDelegate{
     }
     
     func fadePlayer(fadeInDuration:Double,fadeOutDuration:Double) {
-        player.component(ofType: SpriteComponent.self)?.node.removeAllActions()
+        player.component(ofType: SpriteComponent.self)?.node.removeAction(forKey: "fadeSequence")
         //start fading the player
         let sequence = SKAction.repeatForever(SKAction.sequence([SKAction.fadeAlpha(to: 0.1, duration: fadeOutDuration),SKAction.fadeAlpha(to: 0.9, duration: fadeInDuration)]))
-            player.component(ofType: SpriteComponent.self)?.node.run(sequence)
+        player.component(ofType: SpriteComponent.self)?.node.run(sequence, withKey: "fadeSequence")
     }
     func updateScoreLabel() {
         

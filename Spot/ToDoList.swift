@@ -49,6 +49,7 @@ __________________
     == Prizetypes (icon and prize value should match)
     == Prize Color (images, and image names may need to be changed)
  
+ - Add sounds
   - Create the end of the game
     == Setup the end of game scene
         Show Final Score

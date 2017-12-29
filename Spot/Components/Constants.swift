@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SpriteKit
 
 enum BitMasks:UInt32 {
     case All
@@ -17,6 +18,7 @@ enum BitMasks:UInt32 {
     case LaserCategory
     case StarCategory
     case BorderCategory
+    case ExtraLifeCategory
 }
 
 enum Points:Int {
@@ -28,8 +30,13 @@ enum Points:Int {
     case StarPoints = 100
 }
 
-
-
+//all nodes have equal height/width
+enum NodeSize: CGFloat  {
+    case Small = 8.0
+    case Medium = 15.0
+    case Large = 50.0
+    
+}
 extension Float{
     func roundToTens() -> Int{
         return 10 * Int(Darwin.roundf(self / 10.0))
@@ -48,4 +55,8 @@ extension Double{
     func roundToHundreds() -> Int{
         return 100 * Int(Darwin.round(self / 100.0))
     }
+}
+
+func degToRad(deg : Double) -> Double {
+    return deg / 180 * .pi
 }
