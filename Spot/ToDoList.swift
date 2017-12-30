@@ -45,19 +45,20 @@ __________________
   * Keep track of prizes and remove them when they are caught
   * Set a variable limit of prizes (init to 5)
   * show 3 small lives in the top right corner under the score and update them as orbs hit the player
-  - setup randomness for:
-    == Prizetypes (icon and prize value should match)
-    == Prize Color (images, and image names may need to be changed)
+  * setup randomness for:
+    * Prizetypes (icon and prize value should match)
+    * Prize Color (images, and image names may need to be changed)
  
+  * Create the end of the game
+    * Setup the end of game scene
+        *Show Final Score
+        *Show Start Over
+ 
+ - Add SplashScreen
+ - Add parralax background
+ - Update orb - orb contact
  - Add sounds
-  - Create the end of the game
-    == Setup the end of game scene
-        Show Final Score
-        Show Start Over
- 
- 
- 
- 
+ - Replace admob stuff
  
  Part 3 - Game Center Integration
  ==================================

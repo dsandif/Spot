@@ -39,7 +39,7 @@ class MovementComponent: GKComponent {
     func MoveTo(newDirection:Direction) -> Bool{
         var didMove = false;
         var newPosition:CGPoint
-        var rotationAngle = CGFloat(0);
+    
         currentPosition = self.entity?.component(ofType: SpriteComponent.self)?.node.position
         
         switch newDirection {

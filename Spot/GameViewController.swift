@@ -31,8 +31,8 @@ class GameViewController: UIViewController,GADBannerViewDelegate {
             
             view.ignoresSiblingOrder = true
             
-            view.showsFPS = true
-            view.showsNodeCount = true
+//            view.showsFPS = true
+//            view.showsNodeCount = true
             
             
             //instantiate the banner with desired ad size.
@@ -66,15 +66,17 @@ class GameViewController: UIViewController,GADBannerViewDelegate {
     }
     
     override var shouldAutorotate: Bool {
-        return true
+        return false
     }
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        if UIDevice.current.userInterfaceIdiom == .phone {
-            return .allButUpsideDown
-        } else {
-            return .all
-        }
+//        if UIDevice.current.userInterfaceIdiom == .phone {
+//            return .
+//        } else {
+//            return .all
+//        }
+        
+        return .portrait
     }
 
     override func didReceiveMemoryWarning() {

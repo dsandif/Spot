@@ -69,7 +69,6 @@ class Prize: GKEntity {
     override init() {
         super.init()
         self.prizeType = PrizeType.randomType()
-        var value:Points
         
         switch prizeType {
         case .Points?:
@@ -97,6 +96,10 @@ class Prize: GKEntity {
                     //addprize value
                     let valueComponent = ValueComponent(points: .LaserPoints)
                     addComponent(valueComponent)
+                }else if imageType.rawValue.contains("spaceMeteors"){
+                    prizeNode.physicsBody?.categoryBitMask = BitMasks.OrbCategory.rawValue
+                    
+                    //no prize value necessary
                 }
                 
                 //create the rotatig action and ad the sprite component

@@ -10,6 +10,7 @@
 		8DD28CAC2AD0EBC936B7BE6C /* Pods_Spot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C381EE2C2D9E6CF37A1E4CC /* Pods_Spot.framework */; };
 		A61798881FE8E1EF000342EC /* ToDoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A61798871FE8E1EF000342EC /* ToDoList.swift */; };
 		A62B56F81FECA38C00B2C496 /* AdmobMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = A62B56F71FECA38C00B2C496 /* AdmobMethods.swift */; };
+		A64D83911FF7266B00D9B2BC /* EndGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = A64D83901FF7266B00D9B2BC /* EndGame.swift */; };
 		A654CCA31FE9723E00641B23 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A654CCA21FE9723E00641B23 /* Constants.swift */; };
 		A6639A821FEB3C1000E01EE6 /* ValueComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6639A811FEB3C1000E01EE6 /* ValueComponent.swift */; };
 		A69D55131F79EA660052B16E /* Orb.swift in Sources */ = {isa = PBXBuildFile; fileRef = A69D55121F79EA660052B16E /* Orb.swift */; };
@@ -38,6 +39,7 @@
 		3C381EE2C2D9E6CF37A1E4CC /* Pods_Spot.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Spot.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A61798871FE8E1EF000342EC /* ToDoList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoList.swift; sourceTree = "<group>"; };
 		A62B56F71FECA38C00B2C496 /* AdmobMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdmobMethods.swift; sourceTree = "<group>"; };
+		A64D83901FF7266B00D9B2BC /* EndGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndGame.swift; sourceTree = "<group>"; };
 		A654CCA21FE9723E00641B23 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		A6639A811FEB3C1000E01EE6 /* ValueComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueComponent.swift; sourceTree = "<group>"; };
 		A69D55121F79EA660052B16E /* Orb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Orb.swift; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 			isa = PBXGroup;
 			children = (
 				A6EFC4C91F76B23100E22041 /* Level_1.swift */,
+				A64D83901FF7266B00D9B2BC /* EndGame.swift */,
 			);
 			name = Scenes;
 			sourceTree = "<group>";
@@ -306,6 +309,7 @@
 				A69D551B1F7A0BCD0052B16E /* ScoreComponent.swift in Sources */,
 				A69D55171F79FCC10052B16E /* HealthComponent.swift in Sources */,
 				A654CCA31FE9723E00641B23 /* Constants.swift in Sources */,
+				A64D83911FF7266B00D9B2BC /* EndGame.swift in Sources */,
 				A61798881FE8E1EF000342EC /* ToDoList.swift in Sources */,
 				A69D55211F7B140D0052B16E /* Images.swift in Sources */,
 				A6EFC4CD1F76C1D000E22041 /* Player.swift in Sources */,
@@ -386,7 +390,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -436,7 +440,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -451,10 +455,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 229B6HXMD4;
 				INFOPLIST_FILE = Spot/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = spotgame.Spot;
+				PRODUCT_BUNDLE_IDENTIFIER = SpaceJunk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
@@ -466,10 +471,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 229B6HXMD4;
 				INFOPLIST_FILE = Spot/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = spotgame.Spot;
+				PRODUCT_BUNDLE_IDENTIFIER = SpaceJunk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 			};
 			name = Release;

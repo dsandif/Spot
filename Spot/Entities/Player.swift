@@ -25,7 +25,7 @@ class Player: GKEntity {
         //add size
         spriteComponent.node.size = CGSize(width:pWidth,height:pHeight)
         
-        var playerNode = spriteComponent.node
+        let playerNode = spriteComponent.node
         playerNode.physicsBody = SKPhysicsBody(rectangleOf: playerNode.size)
         playerNode.physicsBody?.categoryBitMask = BitMasks.PlayerCategory.rawValue
         playerNode.physicsBody?.contactTestBitMask = BitMasks.OrbCategory.rawValue

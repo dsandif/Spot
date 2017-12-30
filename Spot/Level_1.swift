@@ -22,6 +22,7 @@ class SceneLevel_1:SKScene,SKPhysicsContactDelegate{
     var lifeFrequencyCounter = 0
     let addLifeFrequency = 4
     
+    
     override func didMove(to view: SKView) {
         
         // Set the scale mode to scale to fit the window
@@ -45,18 +46,7 @@ class SceneLevel_1:SKScene,SKPhysicsContactDelegate{
         addChild(label)
         
         
-        for index in 0...2 {
-            //add 3 health icons based on the players image
-            var lifeIcon = SKSpriteNode()
-            lifeIcon.texture = player.component(ofType: SpriteComponent.self)?.node.texture?.copy() as! SKTexture
-            lifeIcon.size.height = 15.0
-            lifeIcon.size.width = 15.0
-            lifeIcon.position.x = (self.frame.width/4) + (lifeIcon.size.width * (CGFloat)(index))
-            lifeIcon.position.y = label.position.y - 15
-            
-            lives.append(lifeIcon)
-            self.addChild(lifeIcon)
-        }
+        initLifeCount()
         
         
         
@@ -68,6 +58,37 @@ class SceneLevel_1:SKScene,SKPhysicsContactDelegate{
         
     }
     
+    func initLifeCount() {
+        for index in 0...2 {
+            //add 3 health icons based on the players image
+            let lifeIcon = SKSpriteNode()
+            lifeIcon.texture = player.component(ofType: SpriteComponent.self)?.node.texture?.copy() as! SKTexture
+            lifeIcon.size.height = 15.0
+            lifeIcon.size.width = 15.0
+            lifeIcon.position.x = (self.frame.width/4) + (lifeIcon.size.width * (CGFloat)(index))
+            lifeIcon.position.y = label.position.y - 15
+            
+            lives.append(lifeIcon)
+            self.addChild(lifeIcon)
+        }
+    }
+    
+    func updatePlayerHealth(){
+        if let playerHealthComponent = player.component(ofType: HealthComponent.self){
+            playerHealthComponent.UpdateHealth(amount: 1)
+            
+            let lifeIcon = SKSpriteNode()
+            lifeIcon.texture = player.component(ofType: SpriteComponent.self)?.node.texture?.copy() as! SKTexture
+            lifeIcon.size.height = 15.0
+            lifeIcon.size.width = 15.0
+            lifeIcon.position.x = (self.frame.width/4) + (lifeIcon.size.width * (CGFloat)(lives.count))
+            lifeIcon.position.y = label.position.y - 15
+            
+            lives.append(lifeIcon)
+            self.addChild(lifeIcon)
+        }
+    }
+    
     func startPrizeTimer(){
         let timeIntervalInSeconds = 2.0
         let selector = #selector(self.spawnPrize)
@@ -76,6 +97,7 @@ class SceneLevel_1:SKScene,SKPhysicsContactDelegate{
         
     }
     
+    //not even being used
     func removePrize() {
         //get a random number between 0 and the size of the array
         let randomPrize = currentPrizeNodes[Int(arc4random_uniform(UInt32(currentPrizeNodes.count)))]
@@ -120,7 +142,7 @@ class SceneLevel_1:SKScene,SKPhysicsContactDelegate{
     // velocity will depend on the current level -- higher levels
     func spawnOrb() {
         let enemyOrb = Orb(imageName: PrizeImage.EnemyOrb.rawValue);
-        var orbSpriteNode = enemyOrb.component(ofType: SpriteComponent.self)?.node
+        let orbSpriteNode = enemyOrb.component(ofType: SpriteComponent.self)?.node
         
         let yPosition = randomBetweenNumbers(firstNum: -self.frame.height/2, secondNum:  self.frame.height/2)
         let xPosition = self.frame.width/2
@@ -216,6 +238,22 @@ class SceneLevel_1:SKScene,SKPhysicsContactDelegate{
             
             playerPrizeContact(playerNode: itemB.node!, prizeNode: itemA.node!)
         }
+        
+        //contact between a player and an extra life
+        if (itemA.categoryBitMask == BitMasks.PlayerCategory.rawValue && itemB.categoryBitMask == BitMasks.ExtraLifeCategory.rawValue){
+            
+            playerLifeContact(playerNode: itemA.node!, extraLifeNode: itemB.node!)
+            
+        }else if(itemA.categoryBitMask == BitMasks.ExtraLifeCategory.rawValue && itemB.categoryBitMask == BitMasks.PlayerCategory.rawValue){
+            
+            playerLifeContact(playerNode: itemB.node!, extraLifeNode: itemA.node!)
+        }
+    }
+    
+    func playerLifeContact(playerNode:SKNode,extraLifeNode:SKNode) {
+        updatePlayerHealth()
+        extraLifeNode.removeFromParent()
+        updatePlayerState()
     }
     
     func playerPrizeContact(playerNode:SKNode,prizeNode:SKNode){
@@ -251,35 +289,38 @@ class SceneLevel_1:SKScene,SKPhysicsContactDelegate{
         
     }
     
-    func orbHitPlayer(playerNode:SKNode,orbNode:SKNode) {
+    func updatePlayerState() {
         var fadeInDuration = 0.0
         var fadeOutDuration = 0.0
+        switch lives.count {
+            
+        case 0:
+            endGame()
+            
+        case 1:
+            fadeOutDuration = 0.3
+            fadeInDuration = 0.4
+            fadePlayer(fadeInDuration: fadeInDuration,fadeOutDuration: fadeOutDuration)
+            
+        case 2:
+            fadeOutDuration = 0.5
+            fadeInDuration = 0.6
+            fadePlayer(fadeInDuration: fadeInDuration,fadeOutDuration: fadeOutDuration)
+            
+        default:
+            player.component(ofType: SpriteComponent.self)?.node.removeAction(forKey: "fadeSequence")
+            player.component(ofType: SpriteComponent.self)?.node.run(SKAction.fadeIn(withDuration: 0.0))
+        }
+    }
+    
+    func orbHitPlayer(playerNode:SKNode,orbNode:SKNode) {
         
         //update the players health
         if let playerHealthComponent = player.component(ofType: HealthComponent.self){
             playerHealthComponent.UpdateHealth(amount: -1)
             lives.popLast()?.removeFromParent()
             
-            
-            switch lives.count {
-                
-                case 0:
-                    endGame()
-                
-                case 1:
-                    fadeOutDuration = 0.3
-                    fadeInDuration = 0.4
-                    fadePlayer(fadeInDuration: fadeInDuration,fadeOutDuration: fadeOutDuration)
-                
-                case 2:
-                    fadeOutDuration = 0.5
-                    fadeInDuration = 0.6
-                    fadePlayer(fadeInDuration: fadeInDuration,fadeOutDuration: fadeOutDuration)
-
-                default:
-                    player.component(ofType: SpriteComponent.self)?.node.removeAction(forKey: "fadeSequence")
-                    player.component(ofType: SpriteComponent.self)?.node.run(SKAction.fadeIn(withDuration: 0.0))
-            }
+            updatePlayerState()
             
             
         }
@@ -356,9 +397,10 @@ class SceneLevel_1:SKScene,SKPhysicsContactDelegate{
     }
     
     func endGame(){
-        // restart the game
-        let scene = SceneLevel_1(size: CGSize(width: (self.view?.frame.width)!, height: (self.view?.frame.height)!))
-        scene.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        let scoringComponent = player.component(ofType: ScoreComponent.self)
+        let scene = EndGame(size: (view?.bounds.size)!)
+        scene.finalScore = (scoringComponent?.points)!
         self.view!.presentScene(scene)
+
     }
 }
